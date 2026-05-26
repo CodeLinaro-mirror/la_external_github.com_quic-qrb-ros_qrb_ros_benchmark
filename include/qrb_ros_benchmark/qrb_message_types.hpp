@@ -10,7 +10,6 @@
 
 // QRB ROS transport types
 #include "qrb_ros_transport_image_type/image.hpp"
-#include "qrb_ros_transport_imu_type/imu.hpp"
 #include "qrb_ros_transport_point_cloud2_type/point_cloud2.hpp"
 
 // DMABUF transport types
@@ -35,8 +34,7 @@ namespace benchmark
 
 // Common macro for creating QRB transport type subscriber/publisher
 #define FOR_EACH_QRB_TRANSPORT_TYPE(MACRO)                                                         \
-  MACRO("qrb_ros/transport/type/Image", qrb_ros::transport::type::Image)                           \
-  MACRO("qrb_ros/transport/type/Imu", qrb_ros::transport::type::Imu)
+  MACRO("qrb_ros/transport/type/Image", qrb_ros::transport::type::Image)
 
 // Common macro for creating dmabuf transport type subscriber/publisher
 #define FOR_EACH_DMABUF_TRANSPORT_TYPE(MACRO)                                                      \
