@@ -29,8 +29,6 @@
 
 ## 🔎 Table of Contents
   * [APIs](#-apis)
-  * [Supported Targets](#-supported-targets)
-  * [Installation](#-installation)
   * [Usage](#-usage)
   * [Build from Source](#-build-from-source)
   * [Contributing](#-contributing)
@@ -53,48 +51,10 @@ The basic usage is same to [ros2_benchmark](https://github.com/NVIDIA-ISAAC-ROS/
 
 ---
 
-## 🎯 Supported Targets
-
-<table >
-  <tr>
-    <th>Development Hardware</th>
-    <th>Hardware Overview</th>
-  </tr>
-  <tr>
-    <td>Qualcomm Dragonwing™ RB3 Gen2</td>
-    <th><a href="https://www.qualcomm.com/developer/hardware/rb3-gen-2-development-kit"><img src="https://s7d1.scene7.com/is/image/dmqualcommprod/rb3-gen2-carousel?fmt=webp-alpha&qlt=85" width="180"/></a></th>
-  </tr>
-    <tr>
-    <td>Qualcomm Dragonwing™ IQ-9075 EVK</td>
-    <th><a href="https://www.qualcomm.com/products/internet-of-things/industrial-processors/iq9-series/iq-9075"><img src="https://s7d1.scene7.com/is/image/dmqualcommprod/dragonwing-IQ-9075-EVK?$QC_Responsive$&fmt=png-alpha" width="160"></a></th>
-  </tr>
-</table>
-
----
-
-## ✨ Installation
-
-> [!IMPORTANT]
-> **PREREQUISITES**: The following steps need to be run on **Qualcomm Ubuntu** and **ROS Jazzy**.<br>
-> Reference [Install Ubuntu on Qualcomm IoT Platforms](https://ubuntu.com/download/qualcomm-iot) and [Install ROS Jazzy](https://docs.ros.org/en/jazzy/index.html) to setup environment. <br>
-> For Qualcomm Linux, please check out the [Qualcomm Intelligent Robotics Product SDK](https://docs.qualcomm.com/bundle/publicresource/topics/80-70018-265/introduction_1.html?vproduct=1601111740013072&version=1.4&facet=Qualcomm%20Intelligent%20Robotics%20Product%20(QIRP)%20SDK) documents.
-
-Add Qualcomm IOT PPA for Ubuntu:
-
-```bash
-sudo add-apt-repository ppa:ubuntu-qcom-iot/qcom-noble-ppa
-sudo add-apt-repository ppa:ubuntu-qcom-iot/qirp
-sudo apt update
-```
-
-Install Debian package:
-
-```bash
-sudo apt install ros-jazzy-qrb-ros-benchmark
-```
-
 ## 🚀 Usage
-Here comes the minimum template for evaluating [qrb_ros/transport/type/Image](https://github.com/qualcomm-qrb-ros/qrb_ros_transport/tree/main/qrb_ros_transport_image_type):
+Here comes the steps for evaluating [qrb_ros/transport/type/Image](https://github.com/qualcomm-qrb-ros/qrb_ros_transport/tree/main/qrb_ros_transport_image_type):
+
+Prepare the benchmark script, benchmark-transport-image.py:
 
 ```python
 from launch_ros.actions import ComposableNodeContainer
@@ -174,22 +134,26 @@ class TestQrbNode(ROS2BenchmarkTest):
         self.run_benchmark()
 ```
 
+Run the benchmark script:
+
+```
+source /opt/ros/jazzy/setup.bash
+launch_test benchmark-transport-image.py
+```
+
 ## 👨‍💻 Build from Source
 
-Download the source code and build with colcon:
+Source is located at sources/quic-qrb-ros/qrb_ros_benchmark in the workspace.
 
-```bash
-source /opt/ros/jazzy/setup.bash && \
-mkdir -p ~/ros-ws/src && \
-cd ~/ros-ws/src && \
-git clone https://github.com/qualcomm-qrb-ros/ros2_benchmark.git && \
-git clone https://github.com/qualcomm-qrb-ros/qrb_ros_transport.git && \
-git clone https://github.com/qualcomm-qrb-ros/lib_mem_dmabuf.git && \
-git clone https://github.com/qualcomm-qrb-ros/qrb_ros_imu.git && \
-git clone https://github.com/qualcomm-qrb-ros/dmabuf_transport.git && \
-git clone https://github.com/qualcomm-qrb-ros/qrb_ros_benchmark.git && \
-cd ~/ros-ws/ && \
-colcon build --packages-up-to qrb_ros_benchmark
+```
+cd build-utils/ubuntu/
+python3 build.py --gen-debians --package ros-jazzy-qrb-ros-benchmark
+```
+
+Built .deb files are output to:
+
+```
+<workspace>/debian_packages/oss/ros-jazzy-qrb-ros-benchmark
 ```
 
 ---
